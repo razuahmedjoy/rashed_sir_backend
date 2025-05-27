@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Add to schema.prisma
+model Education {
+  id                Int      @id @default(autoincrement())
+  degree            String
+  institute         String
+  year              String
+  short_description String?
+  result            String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Experience {
+  id               Int      @id @default(autoincrement())
+  position         String
+  department       String
+  institution      String
+  duration         String
+  responsibilities Json // Stored as JSON array
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model News {
+  id          Int      @id @default(autoincrement())
+  title       String
+  date        DateTime
+  description String?
+  link        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum PublicationType {
+  JOURNAL
+  CONFERENCE
+  TECHNICAL_PAPER
+  SURVEY_PAPER
+}
+
+model Publications {
+  id      Int             @id @default(autoincrement())
+  title   String          @unique
+  authors String
+  year    Int
+  link    String?         @unique
+  type    PublicationType
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  description String?
+  year        Int
+  link        String?  @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ResearchInterest {
+  id        Int      @id @default(autoincrement())
+  title     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ScholarshipAndAwards {
+  id           Int      @id @default(autoincrement())
+  title        String   @unique
+  year         Int?
+  description  String?
+  organization String?
+  createdAt    DateTime @default(now())
+}
+
+model PersonalData {
+  id                      String  @id @default(uuid())
+  greetings               String?
+  name                    String
+  cv_link                 String?
+  designation             String?
+  department              String?
+  institution             String?
+  short_description       String?
+  contact_me_button_email String?
+  
+  city                    String
+  country                 String
+  email1                  String  @unique
+  email2                  String?
+  phone                   String
+  office                  String
+  address                 String?
+  linkedin                String?
+  github                  String?
+  twitter                 String?
+  researchGate            String?
+  profilePhoto            String? // URL to store the uploaded image
+}
